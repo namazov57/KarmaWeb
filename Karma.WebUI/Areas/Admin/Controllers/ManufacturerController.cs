@@ -1,5 +1,6 @@
 ﻿using Karma.Data;
 using Karma.Infrastructure.Entites;
+using Karma.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karma.WebUI.Areas.Admin.Controllers
@@ -7,19 +8,17 @@ namespace Karma.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class ManufacturerController : Controller
     {
-        private DataContext _db;
+        private readonly IManufacutererRepository _manufacutererRepository;
 
-        public ManufacturerController(DataContext db)
+        public ManufacturerController(IManufacutererRepository manufacutererRepository)
         {
-            _db = db;
-
+            _manufacutererRepository = manufacutererRepository;
         }
         public IActionResult Index()
         {
 
-            var manufacturers = _db.Manufacturers
-                .Where(c => c.DeletedBy == null)
-                .ToList();
+            var manufacturers = _manufacutererRepository.GetAll(c => c.DeletedBy == null);
+
             return View(manufacturers);
         }
 
@@ -32,15 +31,15 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Manufacturer manufacturer)
         {
-            
-            _db.Manufacturers.Add(manufacturer);
-            _db.SaveChanges();
+
+            _manufacutererRepository.Add(manufacturer);
+            _manufacutererRepository.Save();
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(int id)
         {
-            var dbmanufacturer = _db.Manufacturers.Find(id);
+            var dbmanufacturer = _manufacutererRepository.Get(x => x.Id == id);
 
             if (dbmanufacturer == null) return NotFound();
 
@@ -50,22 +49,15 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Manufacturer manufacturer)
         {
-            var dbmanufacturer = _db.Manufacturers.Find(manufacturer.Id);
-
-            if (dbmanufacturer == null) return NotFound();
-
-            dbmanufacturer.Name = manufacturer.Name;
-
-           
-
-            _db.SaveChanges();
+            _manufacutererRepository.Edit(manufacturer);
+            _manufacutererRepository.Save();
 
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Details(int id)
         {
-            var dbmanufacturer = _db.Manufacturers.Find(id);
+            var dbmanufacturer = _manufacutererRepository.Get(x => x.Id == id);
 
             if (dbmanufacturer == null) return NotFound();
 
@@ -74,22 +66,12 @@ namespace Karma.WebUI.Areas.Admin.Controllers
 
         public IActionResult Remove(int id)
         {
-            var manufacturer = _db.Manufacturers.Find(id);
+            var dbmanufacturer = _manufacutererRepository.Get(x => x.Id == id);
+            _manufacutererRepository.Remove(dbmanufacturer);
+            _manufacutererRepository.Save();
 
-            if (manufacturer == null)
-                return Json(new
-                {
-                    error = true,
-                    message = "Data Tapilmadi"
-                });
+            var manufacturers = _manufacutererRepository.GetAll(c => c.DeletedBy == null);
 
-            _db.Manufacturers.Remove(manufacturer);
-
-            _db.SaveChanges();
-
-            var manufacturers = _db.Manufacturers
-                 .Where(c => c.DeletedBy == null)
-                 .ToList();
 
             return PartialView("_Body", manufacturers);
         }

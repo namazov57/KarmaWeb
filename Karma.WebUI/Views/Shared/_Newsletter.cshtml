@@ -1,27 +1,30 @@
-﻿<div class="col-lg-4  col-md-6 col-sm-6">
+﻿<div  class="col-lg-4  col-md-6 col-sm-6">
     <div class="single-footer-widget">
         <h6>Newsletter</h6>
         <p>Stay update with our latest</p>
         <div class="" id="mc_embed_signup">
+            <div class="col-md-5">
+              <div class="newsletter-box">
+               
+              </div>
+            </div>
 
-            <form class="newsForm" action="#">
+            <form id="newsForm">
 
 
                 <div class="d-flex flex-row">
 
-                    <input class="newsForm" name="EMAIL"
+                    <input
+                           name="email"
                            placeholder="Enter Email"
-                           type="email">
-
-
+                           id="subscribe"
+                           type="text">
                     <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
                     <div style="position: absolute; left: -5000px;">
-                        <input value="submit" type="text">
-                    </div>
 
-                    <!-- <div class="col-lg-4 col-md-4">
-                                <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-                            </div>  -->
+                        <input type="submit"  value="send">
+                        
+                    </div>
                 </div>
                 <div class="info"></div>
             </form>
@@ -29,36 +32,3 @@
     </div>
 </div>
 
-@section custom_js{
-    <script>
-        $(document).ready(function () {
-            $('form.newsForm').submit(function (e) {
-                e.preventDefault();
-
-                let formData = new FormData(e.currentTarget);
-
-                $.ajax({
-                    url: '@Url.Action("Subscribe")',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-
-                        if (response.error == true) {
-                            toastr.error(response.message, "Xəta!");
-
-                            return;
-                        }
-
-                        toastr.success(response.message, "Uğur!");
-                    },
-                    error: function (response) {
-                        toastr.error("Server xətası.Biraz sonra yenidən yoxlayın!", "Xəta!");
-                    }
-                });
-
-            });
-        });
-    </script>
-                }

@@ -31,9 +31,9 @@
     <link rel="stylesheet" href="~/css/magnific-popup.css">
     <link rel="stylesheet" href="~/css/main.css">
     <link href="~/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-    <link href="~/libs/sweetalert2/sweetalert2.css" rel="stylesheet" />
+   
     <link href="~/libs/toastr.js/toastr.min.css" rel="stylesheet" />
-    <link href="~/libs/toastr.js/toastr.css" rel="stylesheet" />
+   
 
 </head>
 
@@ -123,8 +123,6 @@
                     </div>
                 </div>
                <partial name="_Newsletter">
-
-               
                 <div class="col-lg-3  col-md-6 col-sm-6">
                     <div class="single-footer-widget mail-chimp">
                         <h6 class="mb-20">Instragram Feed</h6>
@@ -181,11 +179,36 @@
     <script src="~/js/main.js"></script>
     <script src="~/libs/toastr.js/toastr.min.js"></script>
     <script src="~/libs/sweetalert2/sweetalert2.all.min.js"></script>
-    <script src="~/libs/sweetalert2/sweetalert2.all.js"></script>
-    <script src="~/libs/sweetalert2/sweetalert2.min.js"></script>
-    <script src="~/libs/sweetalert2/sweetalert2.js"></script>
-
     @RenderSection("custom_js",false)
+    <script>
+             $(document).ready(function () {
+            $("#newsForm").on("submit",(e)=>{
+                e.preventDefault();
+                let formData = new FormData(e.currentTarget);
+               
+                $.ajax({
+                    url: '@Url.Action("subscribe","home")',
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+
+                        if (response.error == true) {
+                            toastr.error(response.message, "Xəta!");
+
+                            return;
+                        }
+                        toastr.success(response.message, "Uğur!");
+                    },
+                    error: function (response) {
+                        toastr.error("Server xətası.Biraz sonra yenidən yoxlayın!", "Xəta!");
+                    }
+                });
+
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -15,14 +15,8 @@ namespace Karma.WebUI
 
             var cstring = builder.Configuration.GetConnectionString("cString");
 
-            builder.Services.AddDbContext<DataContext>(cfg =>
-            {
-                cfg.UseSqlServer(cstring, opt =>
-                {
-                    opt.MigrationsHistoryTable("Migrations");
-                });
+            DataServiceInjection.InstallDataServices(builder.Services, builder.Configuration);
 
-            });
             builder.Services.Configure<EmailOptions>(
                 cfg =>
                 {

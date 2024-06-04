@@ -1,5 +1,6 @@
 ﻿using Karma.Data;
 using Karma.Infrastructure.Entites;
+using Karma.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karma.WebUI.Areas.Admin.Controllers
@@ -7,19 +8,16 @@ namespace Karma.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class TagController : Controller
     {
-        private DataContext _db;
+        private readonly ITagRepository _tagRepository;
 
-        public TagController(DataContext db)
+        public TagController(ITagRepository tagRepository)
         {
-            _db = db;
-
+            _tagRepository = tagRepository;
         }
         public IActionResult Index()
         {
 
-            var tags = _db.Tags
-                .Where(m => m.DeletedBy == null)
-                .ToList();
+            var tags = _tagRepository.GetAll(c => c.DeletedBy == null);
             return View(tags);
         }
 
@@ -32,15 +30,15 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Tag tag)
         {
-           
-            _db.Tags.Add(tag);
-            _db.SaveChanges();
+
+            _tagRepository.Add(tag);
+            _tagRepository.Save();
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(int id)
         {
-            var dbTag = _db.Tags.Find(id);
+            var dbTag = _tagRepository.Get(x => x.Id == id);
 
             if (dbTag == null) return NotFound();
 
@@ -50,22 +48,15 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Tag tag)
         {
-            var dbTag = _db.Tags.Find(tag.Id);
-
-            if (dbTag == null) return NotFound();
-
-            dbTag.Name = tag.Name;
-          
-           
-
-            _db.SaveChanges();
+            _tagRepository.Add(tag);
+            _tagRepository.Save();
 
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Details(int id)
         {
-            var dbTag = _db.Tags.Find(id);
+            var dbTag = _tagRepository.Get(x => x.Id == id);
 
             if (dbTag == null) return NotFound();
 
@@ -74,24 +65,11 @@ namespace Karma.WebUI.Areas.Admin.Controllers
 
         public IActionResult Remove(int id)
         {
-            var dbTag = _db.Tags.Find(id);
+            var dbTag = _tagRepository.Get(x => x.Id == id);
+            _tagRepository.Remove(dbTag);
+            _tagRepository.Save();
 
-            if (dbTag == null)
-            {
-                return Json(new
-                {
-                    error = true,
-                    message = "Data Tapilmadi"
-                });
-            }
-
-            _db.Tags.Remove(dbTag);
-
-            _db.SaveChanges();
-
-            var tags = _db.Tags
-                .Where(c => c.DeletedBy == null)
-                .ToList();
+            var tags = _tagRepository.GetAll(c => c.DeletedBy == null);
 
             return PartialView("_Body", tags);
         }

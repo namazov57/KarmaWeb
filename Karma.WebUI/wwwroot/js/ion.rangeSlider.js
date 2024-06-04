@@ -1277,6 +1277,7 @@
             this.labels.p_max = this.labels.w_max / this.coords.w_rs * 100;
         },
 
+
         /**
          * Measure labels width and X in percent
          */
