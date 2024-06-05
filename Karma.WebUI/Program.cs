@@ -1,6 +1,8 @@
+using Karma.Business;
 using Karma.Data;
 using Karma.Infrastructure.Commons;
 using Karma.Infrastructure.Services.Abstracts;
+using Karma.Infrastructure.Services.Concrates;
 using Karma.Infrastructure.Services.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,8 +28,15 @@ namespace Karma.WebUI
             builder.Services.AddSingleton<IEmailService, EmailService>();
 
             builder.Services.AddSingleton<IDateTimeServive, DateTimeServive>();
+            builder.Services.AddSingleton<IFileService, FileService>();
 
             builder.Services.AddScoped<IIdentityService, IdentityService>();
+
+
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(IBusinessReferance).Assembly);
+            });
 
             var app = builder.Build();
 

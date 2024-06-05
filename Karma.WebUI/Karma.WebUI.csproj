@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -93,6 +93,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.2.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.30" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.30">
 			<PrivateAssets>all</PrivateAssets>
@@ -109,6 +110,7 @@
 	<ItemGroup>
 	  <Folder Include="Areas\Admin\Models\" />
 	  <Folder Include="wwwroot\libs\" />
+	  <Folder Include="wwwroot\uploads\images\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -210,7 +212,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Karma.Data\Karma.Data.csproj" />
+	  <ProjectReference Include="..\Karma.Business\Karma.Business.csproj" />
 	  <ProjectReference Include="..\Karma.Infrastructure\Karma.Infrastructure.csproj" />
 	</ItemGroup>
 	

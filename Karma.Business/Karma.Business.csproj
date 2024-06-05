@@ -6,7 +6,29 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Modules\BrandsModule\**" />
+    <EmbeddedResource Remove="Modules\BrandsModule\**" />
+    <None Remove="Modules\BrandsModule\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Modules\BrandsModule\Commands\BrandAddCommand\BrandAddRequest.cs" />
+    <Compile Include="Modules\BrandsModule\Commands\BrandAddCommand\BrandAddRequestHandler.cs" />
+    <Compile Include="Modules\BrandsModule\Commands\BrandEditCommand\BrandEditRequest.cs" />
+    <Compile Include="Modules\BrandsModule\Commands\BrandEditCommand\BrandEditRequestHandler.cs" />
+    <Compile Include="Modules\BrandsModule\Commands\BrandRemoveCommand\BrandRemoveRequest.cs" />
+    <Compile Include="Modules\BrandsModule\Commands\BrandRemoveCommand\BrandRemoveRequestHandler.cs" />
+    <Compile Include="Modules\BrandsModule\Queries\BrandGetAllQuery\BrandGetAllRequest.cs" />
+    <Compile Include="Modules\BrandsModule\Queries\BrandGetAllQuery\BrandGetAllRequestHandler.cs" />
+    <Compile Include="Modules\BrandsModule\Queries\BrandGetByIdQuery\BrandGetByIdRequest.cs" />
+    <Compile Include="Modules\BrandsModule\Queries\BrandGetByIdQuery\BrandGetByIdRequestHandler.cs" />
+  </ItemGroup>
+
 	<ItemGroup>
+		<PackageReference Include="HtmlSanitizer" Version="8.0.865" />
+		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.30" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.30">
 			<PrivateAssets>all</PrivateAssets>
@@ -18,6 +40,12 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+		<PackageReference Include="SpecFlow" Version="3.9.74" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Karma.Data\Karma.Data.csproj" />
+	  <ProjectReference Include="..\Karma.Infrastructure\Karma.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Karma.Infrastructure.Commons.Abstracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
 
 namespace Karma.Infrastructure.Commons.Concretes
@@ -26,6 +27,7 @@ namespace Karma.Infrastructure.Commons.Concretes
 
         public T Edit(T model)
         {
+            _db.Entry(model).State = EntityState.Modified;
             return model;
         }
 
@@ -42,14 +44,17 @@ namespace Karma.Infrastructure.Commons.Concretes
            
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null)
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null, bool tracking = true)
         {
-           if(predicate!= null)
-            {
-                return _table.Where(predicate).ToList();
-            }
+            var query = _table.AsQueryable();
 
-            return _table.ToList();
+            if (!tracking)
+                query = query.AsNoTracking();
+
+            if (predicate is not null)
+                query = query.Where(predicate);
+
+            return query;
         }
 
         public void Remove(T model)
