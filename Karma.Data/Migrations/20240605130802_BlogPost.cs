@@ -7,6 +7,12 @@ namespace Karma.Data.Migrations
 {
     public partial class BlogPost : Migration
     {
+        public string Title { get; set; }
+        public string Body { get; set; }
+        public int CategoryId { get; set; }
+        public string ImagePath { get; set; }
+        public string Slug { get; set; }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(

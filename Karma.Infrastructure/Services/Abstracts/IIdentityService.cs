@@ -8,6 +8,6 @@ namespace Karma.Infrastructure.Services.Abstracts
 {
     public interface IIdentityService
     {
-        int GetPrincicipialId();
+        int? GetPrincipalId();
     }
 }

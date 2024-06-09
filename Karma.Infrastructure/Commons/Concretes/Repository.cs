@@ -8,7 +8,7 @@ namespace Karma.Infrastructure.Commons.Concretes
     public abstract class Repository<T> : IRepository<T>
         where T : class
     {
-        private readonly DbContext _db;
+        protected readonly DbContext _db;
         private readonly DbSet<T> _table;
 
         public Repository(DbContext db)

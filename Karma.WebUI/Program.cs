@@ -10,8 +10,10 @@ namespace Karma.WebUI
 {
     public class Program
     {
+        internal static string[] policies = null;
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
 
@@ -29,7 +31,7 @@ namespace Karma.WebUI
 
             builder.Services.AddSingleton<IDateTimeServive, DateTimeServive>();
             builder.Services.AddSingleton<IFileService, FileService>();
-
+            builder.Services.AddSingleton<ICryptoService, CryptoService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
 
 
@@ -39,6 +41,9 @@ namespace Karma.WebUI
             });
 
             var app = builder.Build();
+            app.BuildServices();
+            app.UseStaticFiles();
+            app.UseRouting();
 
             app.MapControllerRoute(
              name: "areas",

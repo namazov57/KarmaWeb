@@ -9,7 +9,7 @@ namespace Karma.Infrastructure.Commons.Abstracts
     public interface IAuditableEntity
     {
 
-         int CreatedBy { get; set; }
+         int? CreatedBy { get; set; }
          DateTime CreatedAt { get; set; }
 
          int? ModifiedBy { get; set; }

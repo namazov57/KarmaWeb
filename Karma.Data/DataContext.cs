@@ -1,11 +1,13 @@
 ﻿using Karma.Infrastructure.Commons.Abstracts;
 using Karma.Infrastructure.Entites;
+using Karma.Infrastructure.Entites.Membership;
 using Karma.Infrastructure.Services.Abstracts;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Data
 {
-    public class DataContext:DbContext
+    public class DataContext:IdentityDbContext<KarmaUser, KarmaRole, int, KarmaUserClaim, KarmaUserRole, KarmaUserLogin, KarmaRoleClaim, KarmaUserToken>
     {
         private readonly IDateTimeServive _dateTimeServive;
         private readonly IIdentityService _identityService;
@@ -40,12 +42,12 @@ namespace Karma.Data
                     switch (entity.State)
                     {
                         case EntityState.Added:
-                            entity.Entity.CreatedBy = _identityService.GetPrincicipialId();
+                            entity.Entity.CreatedBy = _identityService.GetPrincipalId();
                             entity.Entity.CreatedAt = _dateTimeServive.ExecutingTime;
                             break;
                        
                         case EntityState.Modified:
-                            entity.Entity.ModifiedBy = _identityService.GetPrincicipialId() ;
+                            entity.Entity.ModifiedBy = _identityService.GetPrincipalId();
                             entity.Entity.ModifiedAt = _dateTimeServive.ExecutingTime;
 
                             entity.Property(m => m.CreatedBy).IsModified = false;
@@ -53,7 +55,7 @@ namespace Karma.Data
                             break;
                         case EntityState.Deleted:
                             entity.State = EntityState.Modified;
-                            entity.Entity.DeletedBy = _identityService.GetPrincicipialId();
+                            entity.Entity.DeletedBy = _identityService.GetPrincipalId();
                             entity.Entity.DeletedAt = _dateTimeServive.ExecutingTime;
 
                             entity.Property(m => m.CreatedBy).IsModified = false;

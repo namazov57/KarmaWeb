@@ -3,9 +3,6 @@ using Karma.Business.Modules.ColorsModule.Commands.ColorEditCommand;
 using Karma.Business.Modules.ColorsModule.Commands.ColorRemoveCommand;
 using Karma.Business.Modules.ColorsModule.Queries.ColorGetAllQuery;
 using Karma.Business.Modules.ColorsModule.Queries.ColorGetByIdQuery;
-using Karma.Data;
-using Karma.Infrastructure.Entites;
-using Karma.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

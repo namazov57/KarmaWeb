@@ -1,6 +1,9 @@
-﻿using Karma.Data;
+﻿using Karma.Business.Modules.SubscribeModule.Commands.SubscribeApproveCommand;
+using Karma.Business.Modules.SubscribeModule.Commands.SubscribeTicketCommand;
+using Karma.Data;
 using Karma.Infrastructure.Entites;
 using Karma.Infrastructure.Services.Abstracts;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -11,12 +14,12 @@ namespace KarmaWebSite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DataContext _db;
+        private readonly IMediator mediator;
         private readonly IEmailService _emailService;
 
-        public HomeController(DataContext db, IEmailService emailService)
+        public HomeController(IMediator mediator, IEmailService emailService)
         {
-            _db = db;
+            this.mediator = mediator;
             _emailService = emailService;
         }
         public IActionResult Index()
@@ -25,101 +28,24 @@ namespace KarmaWebSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Subscribe(string email)
+        public async Task<IActionResult> Subscribe(SubscribeTicketRequest request)
         {
-            bool isEmail = Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+            await mediator.Send(request);
 
-            if (!isEmail)
+            return Json(new
             {
-                return Json(new
-                {
-                    error = true,
-                    message = "Zəhmət olmasa düzgün email daxil edin"
-                });
-            }
-
-            var subscriber = _db.Subscribers.FirstOrDefault(s => s.EmailAddress == email);
-
-            if (subscriber != null && !subscriber.IsApproved)
-            {
-                return Json(new
-                {
-                    error = false,
-                    message = $"Bu {email}-ə link göndərilmişdir,Zəhmət olmasa təsdiq edin"
-                });
-            }
-
-            if (subscriber != null && subscriber.IsApproved)
-            {
-                return Json(new
-                {
-                    error = false,
-                    message = $"Bu {email} artıq abunə olmuşdur"
-                });
-            }
-
-            var newSubscriber = new Subscriber
-            {
-                CreatedAt = DateTime.Now,
-                EmailAddress = email,
-            };
-
-            _db.Subscribers.Add(newSubscriber);
-            _db.SaveChanges();
-
-            string token = $"#demo-{newSubscriber.EmailAddress}-{newSubscriber.CreatedAt:yyyy-MM-dd HH:mm:ss.fff}-bigon";
-            token = HttpUtility.UrlEncode(token);
-
-            string url = $"{Request.Scheme}://{Request.Host}/subscribe-approve?token={token}";
-            string body = $"Please click to link accept subscription <a href=\"{url}\">Click!</a>";
-
-            await _emailService.SendMailAsync(email, "Subscription", body);
-
-            return Ok(new
-            {
-                success = true,
-                message = $"Bu {email}-ə link göndərildi, zəhmət olmasa təsdiq edin"
+                error = false,
+                message = $"Abunəliyinizi təsdiq etmək üçün '{request.Email}' e-poçt adresinə daxil olub sizə göndərilən linkə keçid edin!"
             });
         }
 
-        [Route("/subscribe-approve")]
-        public async Task<IActionResult> SubscribeApprove(string token)
+
+        public async Task<IActionResult> SubscribeApprove(SubscribeApproveRequest request)
         {
-            string pattern = @"#demo-(?<email>[^-]*)-(?<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}.\d{3})-bigon";
+            await mediator.Send(request);
 
-            Match match = Regex.Match(token, pattern);
-
-            if (!match.Success)
-            {
-                return Content("token is broken!");
-            }
-
-            string email = match.Groups["email"].Value;
-            string dateStr = match.Groups["date"].Value;
-
-            if (!DateTime.TryParseExact(dateStr, "yyyy-MM-dd HH:mm:ss.fff", null, DateTimeStyles.None, out DateTime date))
-            {
-                return Content("token is broken!");
-            }
-
-            var subscriber = await _db.Subscribers
-                .FirstOrDefaultAsync(m => m.EmailAddress.Equals(email) && m.CreatedAt == date);
-
-            if (subscriber == null)
-            {
-                return Content("token is broken!");
-            }
-
-            if (!subscriber.IsApproved)
-            {
-                subscriber.IsApproved = true;
-                subscriber.ApprovedAt = DateTime.Now;
-            }
-            await _db.SaveChangesAsync();
-
-
-            return Content($"Success: Email: {email}\n" +
-                $"Date: {date}");
+            TempData["Message"] = "Abuneliyiniz tesdiqlendi";
+            return RedirectToAction(nameof(Index));
         }
     }
 }

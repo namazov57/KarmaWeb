@@ -1,10 +1,17 @@
-﻿using Karma.Infrastructure.Commons.Abstracts;
+﻿using Karma.Data.Persistences.Seed;
+using Karma.Infrastructure.Commons.Abstracts;
+using Karma.Infrastructure.Entites.Membership;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Karma.Data
 {
+
     public static class DataServiceInjection
     {
         public static IServiceCollection InstallDataServices(this IServiceCollection services, IConfiguration configuration)
@@ -20,6 +27,19 @@ namespace Karma.Data
                     });
 
             });
+
+            services.AddIdentityCore<KarmaUser>()
+                .AddRoles<KarmaRole>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+            services.AddScoped<UserManager<KarmaUser>>();
+            services.AddScoped<RoleManager<KarmaRole>>();
+            services.AddScoped<SignInManager<KarmaUser>>();
+
 
             var repoInterfaceType = typeof(IRepository<>);
 
@@ -45,6 +65,7 @@ namespace Karma.Data
             }
             return services;
         }
-
+   
+      
     }
 }
