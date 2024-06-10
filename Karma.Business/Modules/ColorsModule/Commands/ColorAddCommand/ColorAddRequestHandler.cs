@@ -1,4 +1,5 @@
-﻿using Karma.Infrastructure.Entites;
+﻿using Karma.Data.Repositories;
+using Karma.Infrastructure.Entites;
 using Karma.Infrastructure.Repositories;
 using MediatR;
 
@@ -7,15 +8,18 @@ namespace Karma.Business.Modules.ColorsModule.Commands.ColorAddCommand
     internal class ColorAddRequestHandler : IRequestHandler<ColorAddRequest, Color>
     {
         private readonly IColorRepository _colorRepository;
+      
 
         public ColorAddRequestHandler(IColorRepository colorRepository)
         {
             _colorRepository = colorRepository;
+           
         }
 
         public async Task<Color> Handle(ColorAddRequest request, CancellationToken cancellationToken)
         {
-            
+
+            //throw new ArgumentNullException("request");
             var color = new Color
             {
                 Name = request.Name,

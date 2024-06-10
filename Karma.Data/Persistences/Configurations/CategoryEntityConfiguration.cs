@@ -8,20 +8,18 @@ namespace Karma.Data.Persistences.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasKey(x => x.Id);
-
-            builder.Property(x => x.Id).HasColumnType("int");
-
-            builder.Property(x => x.Name).HasColumnType("nvarchar").HasMaxLength(100).IsRequired();
-
-            builder.HasOne<Category>()
-                .WithMany()
-                .HasForeignKey(x => x.ParentId)
-                .HasPrincipalKey(x => x.Id)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.Property(m => m.Id).UseIdentityColumn(1, 1);
+            builder.Property(m => m.ParentId).HasColumnType("int");
+            builder.Property(m => m.Name).HasColumnType("nvarchar").HasMaxLength(200).IsRequired();
 
             builder.ConfigureAsAuditable();
 
+            builder.HasOne<Category>()
+                .WithMany()
+                .HasForeignKey(m => m.ParentId)
+                .HasPrincipalKey(m => m.Id);
+
+            builder.HasKey(m => m.Id);
             builder.ToTable("Categories");
         }
 

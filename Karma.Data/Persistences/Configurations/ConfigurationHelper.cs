@@ -7,19 +7,16 @@ namespace Karma.Data.Persistences.Configurations
     public static class ConfigurationHelper
     {
         public static EntityTypeBuilder<T> ConfigureAsAuditable<T>(this EntityTypeBuilder<T> builder)
-       where T : AuditableEntity
+            where T : AuditableEntity
         {
-            builder.Property(x => x.CreatedBy).HasColumnType("int").IsRequired();
-            builder.Property(x => x.CreatedAt).HasColumnType("datetime").IsRequired();
-
-            builder.Property(x => x.ModifiedBy).HasColumnType("int");
-            builder.Property(x => x.ModifiedAt).HasColumnType("datetime");
-
-            builder.Property(x => x.DeletedBy).HasColumnType("int");
-            builder.Property(x => x.DeletedAt).HasColumnType("datetime");
+            builder.Property(m => m.CreatedBy).HasColumnType("int").IsRequired();
+            builder.Property(m => m.CreatedAt).HasColumnType("datetime").IsRequired();
+            builder.Property(m => m.ModifiedBy).HasColumnType("int");
+            builder.Property(m => m.ModifiedAt).HasColumnType("datetime");
+            builder.Property(m => m.DeletedBy).HasColumnType("int");
+            builder.Property(m => m.DeletedAt).HasColumnType("datetime");
 
             return builder;
-
         }
 
     }

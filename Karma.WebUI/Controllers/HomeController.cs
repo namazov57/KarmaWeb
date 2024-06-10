@@ -4,6 +4,7 @@ using Karma.Data;
 using Karma.Infrastructure.Entites;
 using Karma.Infrastructure.Services.Abstracts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -12,17 +13,32 @@ using System.Web;
 
 namespace KarmaWebSite.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly IMediator mediator;
-        private readonly IEmailService _emailService;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(IMediator mediator, IEmailService emailService)
+        public HomeController(IMediator mediator, ILogger<HomeController> logger)
         {
             this.mediator = mediator;
-            _emailService = emailService;
+            this.logger = logger;
         }
         public IActionResult Index()
+        {
+            logger.LogTrace("Trace Log Message");
+            logger.LogDebug("Debug Log Message");
+            logger.LogInformation("Information Log Message");
+            logger.LogWarning("Warning Log Message");
+            logger.LogError("Error Log Message");
+            logger.LogCritical("Critical Log Message");
+            return View();
+        }
+        public IActionResult About()
+        {
+            return View();
+        }
+        public IActionResult Contact()
         {
             return View();
         }
@@ -40,6 +56,7 @@ namespace KarmaWebSite.Controllers
         }
 
 
+        [Route("/subscribe-approve.html")]
         public async Task<IActionResult> SubscribeApprove(SubscribeApproveRequest request)
         {
             await mediator.Send(request);

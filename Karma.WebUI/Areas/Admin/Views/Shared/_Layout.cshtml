@@ -1,12 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from demo.dashboardpack.com/adminty-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 Sep 2021 04:26:24 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-    <title>Adminty - Premium Admin Template by Colorlib </title>
+    <title>BigOn | Dashboard | @ViewBag.Title </title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -24,72 +20,32 @@
     <!-- Favicon icon -->
     <link rel="icon" href="~/admin/assets/images/favicon.ico" type="image/x-icon">
     <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
     <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="~/admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="~/admin/assets/icon/feather/css/feather.css">
+    <link rel="stylesheet" href="~/admin/assets/icon/feather/css/feather.css" />
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="~/admin/assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="~/admin/assets/css/jquery.mCustomScrollbar.css">
-    
-    <link href="~/libs/sweetalert2/sweetalert2.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="~/assets/css/additional.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="~/admin/assets/css/style.css" />
+    <link rel="stylesheet" href="~/admin/assets/css/jquery.mCustomScrollbar.css" />
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+    <link rel="stylesheet" href="~/libs/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/admin/assets/css/additional.css" />
+    @RenderSection("addcss",required:false)
 </head>
-
 <body>
-    <!-- Pre-loader start -->
-    <div class="theme-loader">
-        <div class="ball-scale">
-            <div class='contain'>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-                <div class="ring">
-                    <div class="frame"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Pre-loader end -->
+    <partial name="_Preloader" />
+
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
-
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
-
                     <div class="navbar-logo">
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a asp-action="index" asp-controller="dashboard">
+                        <a href="index.html">
                             <img class="img-fluid" src="~/admin/assets/images/logo.png" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options">
@@ -133,7 +89,7 @@
                                                      src="~/admin/assets/images/avatar-4.jpg"
                                                      alt="Generic placeholder image">
                                                 <div class="media-body">
-                                                    <h5 class="notification-user">Nicat Namazov</h5>
+                                                    <h5 class="notification-user">John Doe</h5>
                                                     <p class="notification-msg">
                                                         Lorem ipsum dolor sit amet, consectetuer
                                                         elit.
@@ -188,7 +144,7 @@
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="~/admin/assets/images/avatar-4.jpg" class="img-radius"
                                              alt="User-Profile-Image">
-                                        <span>Nicat Namazov</span>
+                                        @*<span>@User.GetClaimValue(ClaimTypes.GivenName)</span>*@
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
@@ -199,7 +155,6 @@
                                             </a>
                                         </li>
                                         <li>
-
                                             <a href="default/user-profile.html">
                                                 <i class="feather icon-user"></i> Profile
                                             </a>
@@ -215,20 +170,17 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="default/auth-normal-sign-in.html">
+                                            <a asp-controller="Account" asp-action="Logout">
                                                 <i class="feather icon-log-out"></i> Logout
                                             </a>
                                         </li>
                                     </ul>
-
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-
-            <!-- Sidebar chat start -->
             <div id="sidebar" class="users p-chat-user showChat">
                 <div class="had-container">
                     <div class="card card_main p-fixed users-main">
@@ -307,16 +259,16 @@
                     </div>
                 </div>
             </div>
-            <!-- Sidebar inner chat start-->
             <div class="showChat_inner">
                 <div class="media chat-inner-header">
                     <a class="back_chatBox">
-                        <i class="feather icon-chevron-left"></i> Nicat Namazov
+                        <i class="feather icon-chevron-left"></i> Josephin Doe
                     </a>
                 </div>
                 <div class="media chat-messages">
                     <a class="media-left photo-table" href="#!">
-                        <img class="media-object img-radius img-radius m-t-5" src="~/admin/assets/images/avatar-3.jpg"
+                        <img class="media-object img-radius img-radius m-t-5"
+                             src="~/admin/assets/images/avatar-3.jpg"
                              alt="Generic placeholder image">
                     </a>
                     <div class="media-body chat-menu-content">
@@ -349,55 +301,16 @@
                     </div>
                 </div>
             </div>
-            <!-- Sidebar inner chat end-->
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
-                    <nav class="pcoded-navbar">
-                        <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel">Navigation</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu active pcoded-trigger">
-                                    <a asp-action="index" asp-controller="dashboard">
-                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                                        <span class="pcoded-mtext">Admin</span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li asp-active-route="color" >
-                                            <a asp-action="index" asp-controller="color">
-                                                <span class="pcoded-mtext">Color</span>
-                                            </a>
-                                        </li> 
-                                        <li asp-active-route="tag">
-                                            <a asp-action="index" asp-controller="tag">
-                                                <span class="pcoded-mtext">Tag</span>
-                                            </a>
-                                        </li>
-                                        <li asp-active-route="brand">
-                                            <a asp-action="index" asp-controller="brand">
-                                                <span class="pcoded-mtext">Brand</span>
-                                            </a>
-                                        </li>
-                                      
-                                    </ul>
-                                </li>
-                              
-                            </ul>
-                           
-                        </div>
-                    </nav>
+                    <partial name="_Sidebar" />
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
                             <div class="main-body">
                                 <div class="page-wrapper">
-
-                                    <div class="page-body">
-        @RenderBody()
-   </div>
+                                    @RenderBody()
                                 </div>
-
-                                <div id="styleSelector">
-
-                                </div>
+                                <div id="styleSelector"></div>
                             </div>
                         </div>
                     </div>
@@ -406,37 +319,77 @@
         </div>
     </div>
 
-   
-    <!-- Required Jquery -->
-    <script type="text/javascript" src="~/admin/bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="~/admin/bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="~/admin/bower_components/popper.js/dist/umd/popper.min.js"></script>
-    <script type="text/javascript" src="~/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Warning Section Starts -->
+    <!-- Older IE warning message -->
+    <!--[if lt IE 10]>
+    <div class="ie-warning">
+        <h1>Warning!!</h1>
+        <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+        <div class="iew-container">
+            <ul class="iew-download">
+                <li>
+                    <a href="http://www.google.com/chrome/">
+                        <img src="./files/assets/images/browser/chrome.png" alt="Chrome">
+                        <div>Chrome</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.mozilla.org/en-US/firefox/new/">
+                        <img src="./files/assets/images/browser/firefox.png" alt="Firefox">
+                        <div>Firefox</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.opera.com">
+                        <img src="./files/assets/images/browser/opera.png" alt="Opera">
+                        <div>Opera</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.apple.com/safari/">
+                        <img src="./files/assets/images/browser/safari.png" alt="Safari">
+                        <div>Safari</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                        <img src="./files/assets/images/browser/ie.png" alt="">
+                        <div>IE (9 & above)</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <p>Sorry for the inconvenience!</p>
+    </div>
+    <![endif]-->
+    <!-- Warning Section Ends -->
+    <script src="https://kit.fontawesome.com/1154e1d6ee.js" crossorigin="anonymous"></script>
+    <script src="~/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/admin/bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="~/admin/bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="~/admin/bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
     <!-- modernizr js -->
-    <script type="text/javascript" src="~/admin/bower_components/modernizr/modernizr.js"></script>
+    <script src="~/admin/bower_components/modernizr/modernizr.js"></script>
     <!-- Chart js -->
-    <script type="text/javascript" src="~/admin/bower_components/chart.js/dist/Chart.js"></script>
+    <script src="~/admin/bower_components/chart.js/dist/Chart.js"></script>
     <!-- amchart js -->
     <script src="~/admin/assets/pages/widget/amchart/amcharts.js"></script>
     <script src="~/admin/assets/pages/widget/amchart/serial.js"></script>
     <script src="~/admin/assets/pages/widget/amchart/light.js"></script>
     <script src="~/admin/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-   
+    <script src="~/admin/assets/js/SmoothScroll.js"></script>
     <script src="~/admin/assets/js/pcoded.min.js"></script>
     <!-- custom js -->
     <script src="~/admin/assets/js/vartical-layout.min.js"></script>
-   
-    <script type="text/javascript" src="~/admin/assets/js/script.min.js"></script>
-   
-    <script src="~/libs/sweetalert2/sweetalert2.js"></script>
-
-    @RenderSection("custom_js",false)
-
-
+    <script src="~/admin/assets/js/script.min.js"></script>
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/select2/js/select2.full.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/assets/js/toastr.additional.js"></script>
+    @RenderSection("addjs",required:false)
 </body>
 
 
-<!-- Mirrored from demo.dashboardpack.com/adminty-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 Sep 2021 04:27:47 GMT -->
 </html>

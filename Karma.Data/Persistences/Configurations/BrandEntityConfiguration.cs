@@ -9,14 +9,13 @@ namespace Karma.Data.Persistences.Configurations
     {
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
-            builder.HasKey(x => x.Id);
-
-            builder.Property(x => x.Id).HasColumnType("int");
-
-            builder.Property(x => x.Name).HasColumnType("nvarchar").HasMaxLength(150).IsRequired();
+            builder.Property(m => m.Id).UseIdentityColumn(1, 1);
+            builder.Property(m => m.Name).HasColumnType("nvarchar").HasMaxLength(200).IsRequired();
 
             builder.ConfigureAsAuditable();
 
+
+            builder.HasKey(m => m.Id);
             builder.ToTable("Brands");
         }
     }

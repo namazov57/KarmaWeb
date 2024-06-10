@@ -56,41 +56,45 @@
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
                             <li asp-active-route="home" class="nav-item"><a class="nav-link" asp-controller="home" asp-action="index">Home</a></li>
-                            <li asp-active-route="shop" class="nav-item submenu dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Shop</a>
-                                <ul class="dropdown-menu">
-                                    <li asp-active-route="shop" class="nav-item"><a class="nav-link"  asp-controller="shop" asp-action="category">Shop Category</a></li>
-                                    <li asp-active-route="shop" class="nav-item"><a class="nav-link" asp-controller="shop" asp-action="product">Product Details</a></li>
-                                    <li asp-active-route="shop" class="nav-item"><a class="nav-link" asp-controller="shop" asp-action="checkout">Product Checkout</a></li>
-                                    <li asp-active-route="shop" class="nav-item"><a class="nav-link" asp-controller="shop" asp-action="cart">Shopping Cart</a></li>
-                                    <li asp-active-route="shop" class="nav-item"><a class="nav-link" asp-controller="shop" asp-action="confirmation">Confirmation</a></li>
-                                </ul>
-                            </li>
-                            <li asp-active-route="blog" class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Blog</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" asp-controller="blog" asp-action="blog">Blog</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="blog" asp-action="details">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li asp-active-route="pages" class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Pages</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" asp-controller="pages" asp-action="elements">Login</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="pages" asp-action="login">Tracking</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="pages" asp-action="tracking">Elements</a></li>
-                                </ul>
-                            </li>
+                            <li asp-active-route="shop" class="nav-item"><a class="nav-link" asp-controller="shop" asp-action="index">Shop</a></li>
+                            <li asp-active-route="blog" class="nav-item"><a class="nav-link" asp-controller="blog" asp-action="index">Blog</a></li>
                             <li asp-active-route="contact" class="nav-item"><a class="nav-link" asp-controller="contact" asp-action="index">Contact</a></li>
+                          
+                            
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
                             <li class="nav-item">
-                                <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Account" asp-action="Settings" class="d-flex align-items-center">
+                                        <i class="fa fa-cog"></i>Tənzimləmələr
+                                    </a>
+                                    <ul class="ht-dropdown ht-account">
+                                        <li class="nav-item"><a asp-controller="Account" asp-action="Profile">Hesabım</a></li>
+                                        @* @if (User.HasClaim("admin.dashboard.index"))
+                                    {
+                                    <li>
+                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
+                                    </li>
+                                    }*@
+                                        <li class="nav-item">
+                                            <a asp-controller="shop" asp-action="wishlist">Bəyəndiklərim</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="Account" asp-action="Logout">Çıxış</a>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+
+                                    <a asp-controller="Account" asp-action="Signin"  class="nav-link">
+                                        Daxil ol
+                                    </a>
+                              
+                                }
                             </li>
+                           
                         </ul>
                     </div>
                 </div>

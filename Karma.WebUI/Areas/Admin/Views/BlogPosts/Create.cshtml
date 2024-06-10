@@ -1,5 +1,7 @@
-﻿@using Karma.Business.Modules.BlogPostModule.Commands.BlogPostAddCommand
+﻿
+@using Karma.Business.Modules.BlogPostModule.Commands.BlogPostAddCommand
 @model BlogPostAddRequest
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -85,7 +87,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tags</label>
                             <div class="col-sm-10">
-                                @*<select class="form-control" asp-for="Tags" asp-items="@ViewBag.Tags" multiple id="tag-tokenizer"></select>*@
+                                <select class="form-control" asp-for="Tags" asp-items="@ViewBag.Tags" multiple id="tag-tokenizer"></select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -101,7 +103,7 @@
     </div>
 </div>
 
-@section custom_js{
+@section addjs{
     <script src="~/libs/ckeditor5/ckeditor.min.js"></script>
     <script>
         $(document).ready(function () {
