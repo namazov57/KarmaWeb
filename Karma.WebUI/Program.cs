@@ -40,7 +40,7 @@ namespace Karma.WebUI
 
             builder.Services.Configure<EmailOptions>(cfg =>
             {
-                builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg);
+                builder.Configuration.GetSection("emailAccount").Bind(cfg);
             });
             builder.Services.AddSingleton<IEmailService, EmailService>();
             builder.Services.AddSingleton<IDateTimeServive, DateTimeServive>();

@@ -15,6 +15,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [AllowAnonymous]
+    
     public class BlogPostsController : Controller
     {
         private readonly IMediator mediator;
@@ -30,8 +31,8 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             var response = await mediator.Send(request);
             return View(response);
         }
-
-       // [Authorize("admin.blogs.create")]
+        [Authorize("SuperAdmin")]
+        // [Authorize("admin.blogs.create")]
         public async Task<IActionResult> Create()
         {
             var categories = await mediator.Send(new CategoryGetAllRequest());

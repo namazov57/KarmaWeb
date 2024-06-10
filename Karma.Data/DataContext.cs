@@ -14,7 +14,7 @@ namespace Karma.Data
             : base(options)
         {
             this.dateTimeService = dateTimeService;
-            this.dateTimeService = dateTimeService;
+           
             this.identityService = identityService;
         }
 
@@ -36,11 +36,11 @@ namespace Karma.Data
                     switch (entry.State)
                     {
                         case EntityState.Added:
-                            entry.Entity.CreatedBy = 7; //identityService.GetPrincipalId();
+                            entry.Entity.CreatedBy = identityService.GetPrincipalId();
                             entry.Entity.CreatedAt = dateTimeService.ExecutingTime;
                             break;
                         case EntityState.Modified:
-                            entry.Entity.ModifiedBy = 7;//identityService.GetPrincipalId();
+                            entry.Entity.ModifiedBy = identityService.GetPrincipalId();
                             entry.Entity.ModifiedAt = dateTimeService.ExecutingTime;
 
                             entry.Property(m => m.CreatedBy).IsModified = false;
@@ -48,7 +48,7 @@ namespace Karma.Data
                             break;
                         case EntityState.Deleted:
                             entry.State = EntityState.Modified;
-                            entry.Entity.DeletedBy = 7;//identityService.GetPrincipalId();
+                            entry.Entity.DeletedBy = identityService.GetPrincipalId();
                             entry.Entity.DeletedAt = dateTimeService.ExecutingTime;
 
                             entry.Property(m => m.CreatedBy).IsModified = false;

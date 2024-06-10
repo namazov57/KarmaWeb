@@ -83,7 +83,7 @@ namespace Karma.Business.Modules.AccountModule.Commands.RegisterCommand
 
             string url = $"{ctx.ActionContext.HttpContext.Request.Scheme}://{ctx.ActionContext.HttpContext.Request.Host}/email-confirm?token={token}&email={user.Email}";
 
-            string message = $"Qeydiyyatiniz uğurla tamamlandır.Hesabınızı aktivləşdirmək üçün <a href='{url}'>link</a>`lə davam edin.";
+            string message = $"Qeydiyyatiniz uğurla tamamlandı.Hesabınızı aktivləşdirmək üçün <a href='{url}'>link</a>`lə davam edin.";
 
             await emailService.SendMailAsync(request.Email, "Karma Reqistration", message);
         }

@@ -30,30 +30,12 @@ namespace Karma.WebUI.Controllers
         [Route("/signin.html")]
         public async Task<IActionResult> Signin(SigninRequest request)
         {
-            var user = await mediator.Send(request);
-
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
-            };
-
-            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
-
-            await Request.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                principal, new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(10)
-                });
-
-            var callback = Request.Query["ReturnUrl"];
-
-            if (!string.IsNullOrWhiteSpace(callback))
-            {
-                return Redirect(callback);
-            }
+            
+            await mediator.Send(request);
 
             return RedirectToAction("index", "home");
+
+          
         }
 
         [AllowAnonymous]

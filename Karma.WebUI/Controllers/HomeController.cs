@@ -1,15 +1,9 @@
 ﻿using Karma.Business.Modules.SubscribeModule.Commands.SubscribeApproveCommand;
 using Karma.Business.Modules.SubscribeModule.Commands.SubscribeTicketCommand;
-using Karma.Data;
-using Karma.Infrastructure.Entites;
 using Karma.Infrastructure.Services.Abstracts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Web;
 
 namespace KarmaWebSite.Controllers
 {
@@ -17,21 +11,16 @@ namespace KarmaWebSite.Controllers
     public class HomeController : Controller
     {
         private readonly IMediator mediator;
-        private readonly ILogger<HomeController> logger;
+        private readonly IEmailService emailService;
 
-        public HomeController(IMediator mediator, ILogger<HomeController> logger)
+        public HomeController(IMediator mediator,IEmailService emailService )
         {
             this.mediator = mediator;
-            this.logger = logger;
+            this.emailService = emailService;
         }
         public IActionResult Index()
         {
-            logger.LogTrace("Trace Log Message");
-            logger.LogDebug("Debug Log Message");
-            logger.LogInformation("Information Log Message");
-            logger.LogWarning("Warning Log Message");
-            logger.LogError("Error Log Message");
-            logger.LogCritical("Critical Log Message");
+          
             return View();
         }
         public IActionResult About()
