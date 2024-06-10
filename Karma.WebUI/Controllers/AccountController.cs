@@ -32,6 +32,12 @@ namespace Karma.WebUI.Controllers
         {
             
             await mediator.Send(request);
+            var callback = Request.Query["ReturnUrl"];
+
+            if (!string.IsNullOrWhiteSpace(callback))
+            {
+                return Redirect(callback);
+            }
 
             return RedirectToAction("index", "home");
 

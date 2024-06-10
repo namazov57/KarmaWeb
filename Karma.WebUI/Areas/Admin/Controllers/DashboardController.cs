@@ -11,7 +11,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         {
         }
 
-       // [Authorize("admin.dashboard.index")]
+       [Authorize("admin.dashboard.index")]
         public IActionResult Index()
         {
             return View();

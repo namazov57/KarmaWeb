@@ -63,33 +63,31 @@
                             
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="nav-item">
+                            <li asp-active-route="login" class="nav-item">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a asp-controller="Account" asp-action="Settings" class="d-flex align-items-center">
-                                        <i class="fa fa-cog"></i>Tənzimləmələr
-                                    </a>
-                                    <ul class="ht-dropdown ht-account">
-                                        <li class="nav-item"><a asp-controller="Account" asp-action="Profile">Hesabım</a></li>
+                                    
+                                    <ul class="ht-dropdown ht-account" style="display:flex;margin-left:-34px;">
+                                        <li asp-active-route="account" class="nav-item"><a asp-controller="Account" asp-action="Profile">ACCOUNT</a></li>
                                         @* @if (User.HasClaim("admin.dashboard.index"))
                                     {
                                     <li>
                                     <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
                                     </li>
                                     }*@
-                                        <li class="nav-item">
-                                            <a asp-controller="shop" asp-action="wishlist">Bəyəndiklərim</a>
+                                        <li asp-active-route="wishlist" class="nav-item">
+                                            <a  asp-controller="shop" asp-action="wishlist">WISHLIST</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a asp-controller="Account" asp-action="Logout">Çıxış</a>
+                                        <li asp-active-route="logout" class="nav-item">
+                                            <a  asp-controller="account" asp-action="Logout">LOGOUT</a>
                                         </li>
                                     </ul>
                                 }
                                 else
                                 {
 
-                                    <a asp-controller="Account" asp-action="Signin"  class="nav-link">
-                                        Daxil ol
+                                    <a asp-controller="account" asp-action="Signin"  class="nav-link">
+                                        LOGIN
                                     </a>
                               
                                 }
@@ -216,3 +214,15 @@
 </body>
 
 </html>
+
+                        <style>
+                            .nav-item{
+                                a{
+                                    font-size: 12px;
+                                    font-weight: 500;
+                                    color: #222222;
+                                    line-height: 24px;
+                                    font-family: "Roboto", sans-serif;
+                                }
+                            }
+                        </style>

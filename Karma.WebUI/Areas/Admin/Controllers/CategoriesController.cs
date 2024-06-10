@@ -3,6 +3,7 @@ using Karma.Business.Modules.CategoriesModule.Commands.CategoryEditCommand;
 using Karma.Business.Modules.CategoriesModule.Commands.CategoryRemoveCommand;
 using Karma.Business.Modules.CategoriesModule.Queries.CategoryGetAllQuery;
 using Karma.Business.Modules.CategoriesModule.Queries.CategoryGetByIdQuery;
+using Karma.Business.Modules.ColorsModule.Commands.ColorRemoveCommand;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Karma.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
+   // [AllowAnonymous]
     
     public class BlogPostsController : Controller
     {
@@ -25,14 +25,14 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             this.mediator = mediator;
         }
 
-       // [Authorize("admin.blogs.index")]
+        [Authorize("admin.blogs.index")]
         public async Task<IActionResult> Index(BlogPostGetAllRequest request)
         {
             var response = await mediator.Send(request);
             return View(response);
         }
-        [Authorize("SuperAdmin")]
-        // [Authorize("admin.blogs.create")]
+       
+         [Authorize("admin.blogs.create")]
         public async Task<IActionResult> Create()
         {
             var categories = await mediator.Send(new CategoryGetAllRequest());
@@ -46,7 +46,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
 
-      //  [Authorize("admin.blogs.create")]
+        [Authorize("admin.blogs.create")]
         public async Task<IActionResult> Create(BlogPostAddRequest request)
         {
             var response = await mediator.Send(request);
@@ -54,7 +54,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-      //  [Authorize("admin.blogs.details")]
+        [Authorize("admin.blogs.details")]
         public async Task<IActionResult> Details(BlogPostGetByIdRequest request)
         {
             var response = await mediator.Send(request);
@@ -62,7 +62,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             return View(response);
         }
 
-      //  [Authorize("admin.blogs.edit")]
+       [Authorize("admin.blogs.edit")]
         public async Task<IActionResult> Edit(BlogPostGetByIdRequest request)
         {
             var categories = await mediator.Send(new CategoryGetAllRequest());
@@ -77,7 +77,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-       // [Authorize("admin.blogs.edit")]
+        [Authorize("admin.blogs.edit")]
         public async Task<IActionResult> Edit(BlogPostEditRequest request)
         {
             var response = await mediator.Send(request);
@@ -86,7 +86,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-      // [Authorize("admin.blogs.publish")]
+       [Authorize("admin.blogs.publish")]
         public async Task<IActionResult> Publish(BlogPostPublishRequest request)
         {
             await mediator.Send(request);
@@ -99,7 +99,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-      // [Authorize("admin.blogs.delete")]
+       [Authorize("admin.blogs.delete")]
         public async Task<IActionResult> Delete(BlogPostRemoveRequest request)
         {
             await mediator.Send(request);

@@ -38,6 +38,7 @@
 </div>
 
 
+
 <div class="page-body">
 
     <div class="card">
@@ -120,7 +121,7 @@
 
 
 @section addjs{
-   <script src="~/libs/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
     <script src="~/libs/jquery-treegrid/js/jquery.treegrid.min.js"></script>
     <script>
 
@@ -144,7 +145,7 @@
                         let obj = { id };
 
                         $.ajax({
-                            url: '@Url.Action("Categories","Delete")',
+                            url: '@Url.Action("Delete")',
                             type: 'POST',
                             data: obj,
                             success: function (response) {
