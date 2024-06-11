@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Karma.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
+   
     public class CategoriesController : Controller
     {
         private readonly IMediator mediator;
@@ -21,21 +21,21 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             this.mediator = mediator;
         }
 
-        //[Authorize("admin.categories.index")]
+        [Authorize("admin.categories.index")]
         public async Task<IActionResult> Index(CategoryGetAllRequest request)
         {
             var response = await mediator.Send(request);
             return View(response);
         }
 
-       // [Authorize("admin.categories.details")]
+        [Authorize("admin.categories.details")]
         public async Task<IActionResult> Details(CategoryGetByIdRequest request)
         {
             var response = await mediator.Send(request);
             return View(response);
         }
 
-       // [Authorize("admin.categories.create")]
+       [Authorize("admin.categories.create")]
         public async Task<IActionResult> Create()
         {
             var categories = await mediator.Send(new CategoryGetAllRequest());
@@ -44,7 +44,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-       // [Authorize("admin.categories.create")]
+       [Authorize("admin.categories.create")]
         public async Task<IActionResult> Create(CategoryAddRequest request)
         {
             await mediator.Send(request);
@@ -52,7 +52,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       // [Authorize("admin.categories.edit")]
+        [Authorize("admin.categories.edit")]
         public async Task<IActionResult> Edit(CategoryGetByIdRequest request)
         {
             var response = await mediator.Send(request);
@@ -64,7 +64,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-       // [Authorize("admin.categories.edit")]
+       [Authorize("admin.categories.edit")]
         public async Task<IActionResult> Edit(CategoryEditRequest request)
         {
             await mediator.Send(request);
@@ -72,7 +72,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Authorize("admin.categories.delete")]
+        [Authorize("admin.categories.delete")]
         public async Task<IActionResult> Delete(CategoryRemoveRequest request)
         {
             await mediator.Send(request);

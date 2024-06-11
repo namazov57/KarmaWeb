@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Karma.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
+   
     public class ColorController : Controller
     {
 
@@ -20,28 +20,28 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             this.mediator = mediator;
         }
 
-        //[Authorize("admin.colors.index")]
+        [Authorize("admin.colors.index")]
         public async Task<IActionResult> Index(ColorGetAllRequest request)
         {
             var response = await mediator.Send(request);
             return View(response);
         }
 
-        //[Authorize("admin.colors.details")]
+        [Authorize("admin.colors.details")]
         public async Task<IActionResult> Details(ColorGetByIdRequest request)
         {
             var response = await mediator.Send(request);
             return View(response);
         }
 
-       // [Authorize("admin.colors.create")]
+        [Authorize("admin.colors.create")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-       // [Authorize("admin.colors.create")]
+        [Authorize("admin.colors.create")]
         public async Task<IActionResult> Create(ColorAddRequest request)
         {
             await mediator.Send(request);
@@ -49,7 +49,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       //[Authorize("admin.colors.edit")]
+       [Authorize("admin.colors.edit")]
         public async Task<IActionResult> Edit(ColorGetByIdRequest request)
         {
             var response = await mediator.Send(request);
@@ -57,7 +57,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Authorize("admin.colors.edit")]
+        [Authorize("admin.colors.edit")]
         public async Task<IActionResult> Edit(ColorEditRequest request)
         {
             await mediator.Send(request);
@@ -65,7 +65,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Authorize("admin.colors.delete")]
+        [Authorize("admin.colors.delete")]
         public async Task<IActionResult> Delete(ColorRemoveRequest request)
         {
             await mediator.Send(request);

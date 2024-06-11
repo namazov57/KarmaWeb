@@ -26,21 +26,23 @@
                 <div class="single-post row">
                     <div class="col-lg-12">
                         <div class="feature-img">
-                            <img class="img-fluid" src="~/img/blog/feature-img1.jpg" alt="">
+                            <img class="img-fluid" src="~/uploads/images/@Model.ImagePath"  alt="">
                         </div>
                     </div>
                     <div class="col-lg-3  col-md-3">
                         <div class="blog_info text-right">
                             <div class="post_tag">
-                                <a href="#">Food,</a>
-                                <a class="active" href="#">Technology,</a>
-                                <a href="#">Politics,</a>
-                                <a href="#">Lifestyle</a>
+                               <ul>
+                                    @foreach (var item in Model.Tags)
+                                    {
+                                        <li><a asp-action="index" asp-route-tag="@item">@item</a></li>
+                                    }
+                               </ul>
                             </div>
                             <ul class="blog_meta list">
                                 <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
                                 <li><a href="#">12 Dec, 2018<i class="lnr lnr-calendar-full"></i></a></li>
-                                <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
+                               
                                 <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
                             </ul>
                             <ul class="social-links">
@@ -236,11 +238,11 @@
                 </div>
                 <div class="comment-form">
                     <h4>Leave a Reply</h4>
-                    <form>
+                    <form method="post" id="commentForm">
                         <div class="form-group form-inline">
                             <div class="form-group col-lg-6 col-md-6 name">
-                                <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''"
-                                       onblur="this.placeholder = 'Enter Name'">
+                                <input type="hidden" name="PostId" asp-for="Id" />
+                               
                             </div>
                             <div class="form-group col-lg-6 col-md-6 email">
                                 <input type="email" class="form-control" id="email" placeholder="Enter email address"
@@ -281,6 +283,7 @@
                             <a href="#"><i class="fa fa-behance"></i></a>
                         </div>
                         <p>
+
                             Boot camps have its supporters andit sdetractors. Some people do not understand why you
                             should have to spend money on boot camp when you can get. Boot camps have itssuppor
                             ters andits detractors.
@@ -401,18 +404,10 @@
                     <aside class="single-sidebar-widget tag_cloud_widget">
                         <h4 class="widget_title">Tag Clouds</h4>
                         <ul class="list">
-                            <li><a href="#">Technology</a></li>
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Architecture</a></li>
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Food</a></li>
-                            <li><a href="#">Technology</a></li>
-                            <li><a href="#">Lifestyle</a></li>
-                            <li><a href="#">Art</a></li>
-                            <li><a href="#">Adventure</a></li>
-                            <li><a href="#">Food</a></li>
-                            <li><a href="#">Lifestyle</a></li>
-                            <li><a href="#">Adventure</a></li>
+                            @foreach (var item in Model.Tags)
+                            {
+                                <li><a asp-action="index" asp-route-tag="@item">@item</a></li>
+                            }
                         </ul>
                     </aside>
                 </div>

@@ -22,7 +22,6 @@ namespace KarmaWebSite.Controllers
         {
             request.OnlyPublished = true;
             var response = await mediator.Send(request);
-
             var recents = await mediator.Send(new BlogPostRecentsRequest() { Size = 3 });
             ViewBag.Recents = recents;
 
