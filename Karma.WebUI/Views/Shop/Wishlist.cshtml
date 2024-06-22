@@ -1,0 +1,78 @@
+﻿@using Karma.Business.Modules.ShopModule.Queries.ComplexFilterQuery
+
+@model IPagedResponse<ComplexFilterResponseDto>
+
+    <section class="breadcrumb">
+        <ul class="breadcrumb__list flex container">
+        <li><a asp-action="index" asp-controller="home" class="breadcrumb__link">Əsas</a></li>
+            <li><span class="breadcrumb__link"></span>></li>
+            <li><span class="breadcrumb__link">Məhsullar</span></li>
+            <li><span class="breadcrumb__link"></span>></li>
+            <li><span class="breadcrumb__link">Sevimlillər</span></li>
+        </ul>
+    </section>
+
+    <section class="wishlist section--lg container">
+        <div class="table__container">
+            <form method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Şəkil</th>
+                        <th>Ad</th>
+                        <th>Qiymət</th>
+                        <th>Satus</th>
+                        <th>Əməliyyat</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src="~/homeview/assets/img/product-1-2.jpg"
+                                 alt=""
+                                 class="table__img" />
+                        </td>
+                        <td>
+                            <a asp-controller="shop"
+                               asp-action="details"
+                               asp-route-id="1">
+                                Adi
+                            </a>
+                        </td>
+                        <td>
+                            <span class="table__price">110</span>
+                        </td>
+                        <td><span class="table__stock">Stokda</span></td>
+                        <td><a onclick="addToBasket(event)" data-product-id="11" class="btn btn--sm">Səbətə əlavə et</a></td>
+                        <td><i class="fi fi-rs-trash table__trash"></i></td>
+                    </tr>
+                
+                  
+                </tbody>
+            </table>
+            </form>
+        </div>
+    </section>
+
+    <section class="newsletter section">
+        <div class="newsletter__container container grid">
+            <h3 class="newsletter__title flex">
+                <img src="./assets/img/icon-email.svg"
+                     alt=""
+                     class="newsletter__icon" />
+                Yeniliklərdən xəbərdar olmaq üçün abunə olun
+            </h3>
+            <p class="newsletter__description">
+                ...və ilk alış-veriş üçün 10% endirim əldə edin.
+            </p>
+            <form action="" class="newsletter__form">
+                <input type="text"
+                       placeholder="Email daxil edin"
+                       class="newsletter__input" />
+                <button type="submit" class="newsletter__btn">Abunə ol</button>
+            </form>
+        </div>
+    </section>
+
+

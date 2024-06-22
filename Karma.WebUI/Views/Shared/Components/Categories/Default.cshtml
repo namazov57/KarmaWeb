@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Category>
+
+<section class="categories container section">
+    <h3 class="section__title"> Kateqoriyalar</h3>
+    <div class="categories__container swiper">
+        <div class="swiper-wrapper">
+            @foreach (var item in Model.Where(m => m.ParentId == null))
+            {
+               
+                    <a class="category__item swiper-slide" asp-controller="shop" asp-action="index" asp-route-category="@item.Name">@item.Name</a>
+                   
+                            @*    @foreach (var child in Model.Where(m => m.ParentId == item.Id))
+                                {
+
+                    <a class=" title category__item swiper-slide">@child.Name</a>
+                                       
+                                             @foreach (var subchild in Model.Where(m => m.ParentId == child.Id))
+                                    {
+                                    <a href="collections/all.html">@subchild.Name</a></li>
+                                    }
+                                    
+                                }*@
+
+                   
+            }
+          
+        
+        </div>
+
+        <div class="swiper-button-prev">
+            <i class="fi fi-rs-angle-left"></i>
+        </div>
+        <div class="swiper-button-next">
+            <i class="fi fi-rs-angle-right"></i>
+        </div>
+    </div>
+</section>
+     
+
+
+
+
+
+

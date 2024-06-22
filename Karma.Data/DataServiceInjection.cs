@@ -1,7 +1,5 @@
-﻿using Karma.Data.Persistences.Seed;
-using Karma.Infrastructure.Commons.Abstracts;
+﻿using Karma.Infrastructure.Commons.Abstracts;
 using Karma.Infrastructure.Entites.Membership;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;

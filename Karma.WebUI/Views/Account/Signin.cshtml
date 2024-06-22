@@ -1,59 +1,56 @@
-﻿@model Karma.Business.Modules.AccountModule.Commands.SigninCommand.SigninRequest
+﻿
+@model Karma.Business.Modules.AccountModule.Commands.SigninCommand.SigninRequest
 
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
-	<div class="container">
-		<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-			<div class="col-first">
-				<h1>Login/Register</h1>
-				<nav class="d-flex align-items-center">
-					<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-					<a href="category.html">Login/Register</a>
-				</nav>
-			</div>
-		</div>
-	</div>
+<section class="breadcrumb">
+    <ul class="breadcrumb__list flex container">
+        <li><a asp-action="index" asp-controller="home" class="breadcrumb__link">Əsas</a></li>
+        <li><span class="breadcrumb__link">></span></li>
+        <li><span class="breadcrumb__link">Giriş / Qeydiyyat</span></li>
+    </ul>
 </section>
-<!-- End Banner Area -->
-<!--================Login Box Area =================-->
-<section class="login_box_area section_gap">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="login_box_img">
-					<img class="img-fluid" src="~/img/login.jpg" alt="">
-					<div class="hover">
-						<h4>New to our website?</h4>
-						<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-						<a class="primary-btn" href="registration.html">Create an Account</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="login_form_inner">
-					<h3>Log in to enter</h3>
-					<form method="post" class="row login_form"  id="contactForm" >
-						<div class="col-md-12 form-group">
-							<input asp-for="UserName" class="form-control" id="name"  placeholder="Email orUsername" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
-						</div>
-						<div class="col-md-12 form-group">
-							<input asp-for="Password" type="password" class="form-control" id="name"  placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
-						</div>
-						<div class="col-md-12 form-group">
-							<div class="creat_account">
-								<input type="checkbox" id="f-option2" name="selector">
-								<button type="submit" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-success btn-lg mb-1" data-mdb-button-initialized="true">Sign In</button>
-							</div>
-						</div>
-						<div class="col-md-12 form-group">
-							<a asp-action="Register">Create Account</a>
-							
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+
+<section class="login-register section--lg">
+    <div class="login-register__container container grid">
+        <div class="login">
+            <h3 class="section__title">Daxil ol</h3>
+            <form method="post" id="customer_login" class="form grid">
+                <input asp-for="UserName"
+                       placeholder="Email"
+                       class="form__input" />
+                <input type="password" asp-for="Password"
+                       placeholder="Şifrə"
+                       class="form__input" />
+                <div  class="form__btn">
+                    <button type="submit" class="btn">Daxil ol</button>
+                </div>
+
+                <div class="form__btn">
+                    <a asp-action="Register" class="btn">Qeydiyyat</a>
+                </div>
+            </form>
+        </div>
+       
+    </div>
 </section>
-<!--================End Login Box Area =================-->
+
+<section class="newsletter section">
+    <div class="newsletter__container container grid">
+        <h3 class="newsletter__title flex">
+            <img src="./assets/img/icon-email.svg"
+                 alt=""
+                 class="newsletter__icon" />
+            Yeniliklərdən xəbərdar olmaq üçün abunə olun
+        </h3>
+        <p class="newsletter__description">
+            ...və ilk alış-veriş üçün 10% endirim əldə edin.
+        </p>
+        <form action="" class="newsletter__form">
+            <input type="text"
+                   placeholder="Email daxil edin"
+                   class="newsletter__input" />
+            <button type="submit" class="newsletter__btn">Abunə ol</button>
+        </form>
+    </div>
+</section>
+

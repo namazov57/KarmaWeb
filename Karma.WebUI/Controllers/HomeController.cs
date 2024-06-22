@@ -32,6 +32,8 @@ namespace KarmaWebSite.Controllers
             return View();
         }
 
+      
+
         [HttpPost]
         public async Task<IActionResult> Subscribe(SubscribeTicketRequest request)
         {

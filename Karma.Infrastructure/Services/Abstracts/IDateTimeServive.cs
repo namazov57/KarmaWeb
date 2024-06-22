@@ -8,6 +8,6 @@ namespace Karma.Infrastructure.Services.Abstracts
 {
     public interface IDateTimeServive
     {
-        public DateTime ExecutingTime { get; }
+         DateTime ExecutingTime { get; }
     }
 }

@@ -9,6 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Nodes;
+using System.Net.Http.Json;
+using Newtonsoft.Json;
+using Karma.Infrastructure.Services.Concretes;
 
 namespace Karma.Business.Modules.SubscribeModule.Commands.SubscribeTicketCommand
 {
@@ -38,28 +43,28 @@ namespace Karma.Business.Modules.SubscribeModule.Commands.SubscribeTicketCommand
             if (!request.Email.IsEmail())
                 throw new Exception($"'{request.Email}' email teleblerini odemir!");
 
-            var subscriber = subscriberRepository.Get(m => m.EmailAddress.Equals(request.Email));
+            var subscriber = subscriberRepository.Get(m => m.Email.Equals(request.Email));
 
 
-            if (subscriber != null && subscriber.IsApproved)
+            if (subscriber != null && subscriber.Approved)
                 throw new Exception($"'{request.Email}' bu e-poçt adresinə artıq abunəlik tətbiq edilib!");
 
-            else if (subscriber != null && !subscriber.IsApproved)
+            else if (subscriber != null && !subscriber.Approved)
                 throw new Exception($"'{request.Email}' bu e-poçt adresinin təsdiqlənməsiniz!");
 
             subscriber = new Subscriber();
-            subscriber.EmailAddress = request.Email;
+            subscriber.Email = request.Email;
             subscriber.CreatedAt = dateTimeServive.ExecutingTime;
 
             subscriberRepository.Add(subscriber);
             subscriberRepository.Save();
 
-            string token = cryptoService.Encrypt($"{subscriber.EmailAddress}-{subscriber.CreatedAt:yyyy-MM-dd HH:mm:ss.fff}-bigon", true);
+            string token = cryptoService.Encrypt($"{subscriber.Email}-{subscriber.CreatedAt:yyyy-MM-dd HH:mm:ss.fff}-karma", true);
 
             string url = $"{ctx.ActionContext.HttpContext.Request.Scheme}://{ctx.ActionContext.HttpContext.Request.Host}/subscribe-approve.html?token={token}";
 
             string message = $"Abunəliyinizi təsdiq etmək üçün <a href=\"{url}\">linklə</a> davam edin!";
-            await emailService.SendMailAsync(subscriber.EmailAddress, "Karma Service", message);
+            await emailService.SendMailAsync(subscriber.Email, "Karma Service", message);
         }
     }
 }

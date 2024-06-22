@@ -1,4 +1,4 @@
-  'use strict';
+<  'use strict';
   $(document).ready(function() {
       $(".task-right-header-action").on('click', function() {
           $(".task-right-content-action").slideToggle();

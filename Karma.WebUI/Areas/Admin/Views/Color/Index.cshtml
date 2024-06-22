@@ -49,7 +49,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Color</th>
+                            <th>Hex</th>
                             <th>Name</th>
                             <th class="operation">
                                 <a class="btn btn-success" asp-action="create">
@@ -58,20 +58,20 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody >
-                        @foreach (var color in Model)
+                    <tbody>
+                        @foreach (var item in Model)
                         {
                             <tr>
-                                <td><span color style="background-color:@color.HexCode"></span></td>
-                                <td>@color.Name</td>
+                                <td><span color style="background-color:@item.HexCode"></span></td>
+                                <td>@item.Name</td>
                                 <td class="operation">
-                                    <a class="btn btn-info" asp-action="details" asp-route-id="@color.Id">
+                                    <a class="btn btn-info" asp-action="details" asp-route-id="@item.Id">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a class="btn btn-warning" asp-action="edit" asp-route-id="@color.Id">
+                                    <a class="btn btn-warning" asp-action="edit" asp-route-id="@item.Id">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a class="btn btn-danger" onclick="removeEntity(@color.Id,'@color.Name')">
+                                    <a class="btn btn-danger" onclick="removeEntity(@item.Id,'@item.Name')">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -87,7 +87,6 @@
 
 
 @section addjs{
-    <script src="~/assets/js/additional.js"></script>
     <script src="~/libs/sweetalert/sweetalert.min.js"></script>
     <script>
         function removeEntity(id, name) {
@@ -110,15 +109,15 @@
                             data: obj,
                             success: function (response) {
 
-                                if (response.error == true) {
+                                if (response.error==true) {
                                     toastr.error(response.message, 'Error!');
                                     return;
                                 }
 
                                 toastr.success(response.message, 'Success!');
-                                setTimeout(function () {
+                                setTimeout(function(){
                                     window.location.reload();
-                                }, 2e3)
+                                },2e3)
                             },
                             error: function (response) {
                                 console.warn(response);

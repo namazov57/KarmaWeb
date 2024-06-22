@@ -8,15 +8,12 @@ namespace Karma.Data.Persistences.Configurations
     {
         public void Configure(EntityTypeBuilder<Subscriber> builder)
         {
-            builder.HasKey(x => x.EmailAddress);
+            builder.Property(m => m.Email).HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(m => m.Approved).HasColumnType("bit").IsRequired();
+            builder.Property(m => m.ApprovedAt).HasColumnType("datetime");
+            builder.Property(m => m.CreatedAt).HasColumnType("datetime").IsRequired();
 
-            builder.Property(x => x.EmailAddress).HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(x => x.IsApproved).HasColumnType("bit");
-            builder.Property(x => x.ApprovedAt).HasColumnType("datetime");
-            builder.Property(x => x.CreatedAt).HasColumnType("datetime").IsRequired();
-
-
-
+            builder.HasKey(m => m.Email);
             builder.ToTable("Subscribers");
         }
 

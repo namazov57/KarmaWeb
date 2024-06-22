@@ -1,5 +1,8 @@
 ﻿@model IPagedResponse<BlogPostGetAllDto>
 
+@{
+    ViewData["Title"] = "Index";
+}
 
 <div class="page-header">
     <div class="row align-items-end">
@@ -60,7 +63,7 @@
                         {
                             <tr>
                                 <td class="cell-small">
-                                    <img class="img-fluid" src="~/uploads/images/@item.ImagePath" />
+                                    <img class="img-fluid" src="~/uploads/images/@item.ImagePath"/>
                                 </td>
                                 <td class="cell-large ellipsis">
                                     <a href="@item.Slug" target="_blank">
@@ -113,15 +116,15 @@
                             data: obj,
                             success: function (response) {
 
-                                if (response.error == true) {
+                                if (response.error==true) {
                                     toastr.error(response.message, 'Error!');
                                     return;
                                 }
 
                                 toastr.success(response.message, 'Success!');
-                                setTimeout(function () {
+                                setTimeout(function(){
                                     window.location.reload();
-                                }, 2e3)
+                                },2e3)
                             },
                             error: function (response) {
                                 console.warn(response);

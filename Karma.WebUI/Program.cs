@@ -1,8 +1,7 @@
 using Karma.Business;
 using Karma.Data;
-using Karma.Data.Repositories;
 using Karma.Infrastructure.Commons;
-using Karma.Infrastructure.Repositories;
+using Karma.Infrastructure.Middlewares;
 using Karma.Infrastructure.Services.Abstracts;
 using Karma.Infrastructure.Services.Concrates;
 using Karma.Infrastructure.Services.Concretes;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Karma.WebUI
@@ -31,13 +29,14 @@ namespace Karma.WebUI
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
                 cfg.Filters.Add(new AuthorizeFilter(policy));
+                cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
 
             });
 
             DataServiceInjection.InstallDataServices(builder.Services, builder.Configuration);
 
             builder.Services.AddRouting(cfg => cfg.LowercaseUrls = true);
-
+            // builder.Services.Configure<EmailOptions>(cfg => builder.Configuration.GetSection(cfg.GetType().Name).Bind(cfg));
             builder.Services.Configure<EmailOptions>(cfg =>
             {
                 builder.Configuration.GetSection("emailAccount").Bind(cfg);
@@ -143,5 +142,7 @@ namespace Karma.WebUI
 
 
     }
+
+
 }
 

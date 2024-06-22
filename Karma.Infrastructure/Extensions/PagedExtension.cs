@@ -17,6 +17,7 @@ namespace Karma.Infrastructure.Extensions
             where T : class
         {
             var count = query.Count();
+            //var count = 15;
 
             if (orderExpression != null)
                 query = query.OrderByDescending(orderExpression);

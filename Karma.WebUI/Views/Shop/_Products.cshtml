@@ -1,0 +1,65 @@
+﻿@using Karma.Business.Modules.ShopModule.Queries.ComplexFilterQuery
+
+@model IPagedResponse<ComplexFilterResponseDto>
+@foreach (var item in Model)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="~/uploads/images/@item.ImagePath" class="card-img-top" alt="...">
+  <div class="card-body">
+            <a asp-action="details" asp-route-id="@item.Id" class="card-title"> @item.Name</a>
+           
+  </div>
+  
+  <div class="card-body">
+            <rate value="@item.Rate" product-id="@item.Id"></rate>
+
+            <span class="price"><span class=money>@item.Price.ToString("0.00₼")</span></span>
+            <del class="prev-price"><span class=money>@item.Price.ToString("0.00₼")</span></del>
+            <a href="#" class="card-link" data-id="@item.Id">Add</a>
+
+  </div>
+</div>
+    
+   
+      
+  @*  <div class="single-product__item" >
+        <a asp-action="details" asp-route-id="@item.Id" class="product__banner">
+            @item.Name
+
+        </a>
+        <div class="pro-img">
+            <a href="/products/accusantium-doloremque"></a>
+        </div>
+        <div class=" product__images" style="background-image:url(/uploads/images/@item.ImagePath);">
+          
+            
+            <div class="product__actions">
+                <a href="#" class="action__btn" aria-label="Baxmaq">
+                    <i class="fi fi-rs-eye"></i>
+                </a>
+                <a href="#"
+               class="action__btn"
+               aria-label="Sevimlilərə əlavə et">
+                    <i class="fi fi-rs-heart"></i>
+                </a>
+
+            </div>
+            
+        </div>
+        <div class="product__content">
+          
+            <div class="product__rating">
+                <rate value="@item.Rate" product-id="@item.Id"></rate>
+            </div>
+            <div class="product__price flex">
+                <span class="price"><span class=money>@item.Price.ToString("0.00₼")</span></span>
+                <del class="prev-price"><span class=money>@item.Price.ToString("0.00₼")</span></del>
+            </div>
+            <a href="#"
+           class="action__btn cart__btn" data-id="@item.Id"
+           aria-label="Səbətə əlavə et">
+                <i class="fi fi-rs-shopping-bag-add"></i>
+            </a>
+        </div>
+    </div>*@
+}

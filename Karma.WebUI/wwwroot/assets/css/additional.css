@@ -5,11 +5,9 @@
     object-fit: fill;
 }
 
-.blog-img > img {
-    width: 100%;
-    min-height: 205px;
-    max-height: 500px;
-    object-fit: fill;
+
+a {
+    color:black;
 }
 
 .blog-title {

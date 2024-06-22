@@ -57,7 +57,7 @@
                         </tr>
                     </thead>
                     <tbody id="body">
-                        <partial name="_Body" model="@Model" />
+                        <partial name="_Body" model="@Model"/>
                     </tbody>
                 </table>
             </div>
@@ -91,7 +91,7 @@
                             success: function (response, status, xhr) {
 
                                 let headers = getHeaderList(xhr.getAllResponseHeaders());
-                                if (headers['error'] == 'true') {
+                                if (headers['error']=='true') {
                                     toastr.error(headers['message'], 'Error!');
                                     return;
                                 }

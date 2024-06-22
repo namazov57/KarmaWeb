@@ -2,9 +2,9 @@
 {
     public class Subscriber
     {
-        public string EmailAddress { get; set; }
-        public bool IsApproved { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string Email { get; set; }
+        public bool Approved { get; set; }
         public DateTime? ApprovedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

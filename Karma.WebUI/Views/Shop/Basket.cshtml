@@ -1,0 +1,169 @@
+﻿@using Karma.Business.Modules.ShopModule.Queries.BasketListQuery
+@model IEnumerable<BasketListItem>
+
+
+    <section class="breadcrumb">
+        <ul class="breadcrumb__list flex container">
+            <li><a href="index.html" class="breadcrumb__link">Əsas</a></li>
+            <li><span class="breadcrumb__link"></span>></li>
+            <li><span class="breadcrumb__link">Məhsullar</span></li>
+            <li><span class="breadcrumb__link"></span>></li>
+            <li><span class="breadcrumb__link">Səbət</span></li>
+        </ul>
+    </section>
+
+    <section class="cart section--lg container">
+        <div class="table__container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Şəkil</th>
+                        <th>Ad</th>
+                        <th>Qiymət</th>
+                        <th>Say</th>
+                        <th>Cəmi</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="basket-item-@item.CatalogId">
+                        <td class="product-thumbnail">
+                            <a target="_blank" asp-action="details" asp-route-id="@item.ProductId">
+                                <img src="~/uploads/images/@item.ImagePath" alt="@item.Name" />
+                            </a>
+                        </td>
+                        <td class="product-name">
+                            <a target="_blank" asp-action="details" asp-route-id="@item.ProductId">@item.Name</a>
+                        </td>
+                        <td class="product-price">
+                            <span class="amount">@item.Price.ToString("0.00₼")</span>
+                        </td>
+                        <td class="product-quantity">
+                            <input type="number" data-catalog-id="@item.CatalogId" min="1" onchange="changeQuantity(event,this)" value="@Convert.ToInt32(item.Quantity)" />
+                        </td>
+                        <td class="product-subtotal">@((item.Price * item.Quantity).ToString("0.00₼"))</td>
+                        <td class="product-remove">
+                            <a onclick="removeFromBasket(event, '@item.Name','@Url.Action("RemoveFromBasket","Shop")');return"
+                           data-catalog-id="@item.CatalogId"
+                           aria-remove-target=".basket-item-@item.CatalogId">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+        </div>
+
+        <div class="cart__actions">
+            <a href="#" class="btn flex btn__md">
+                <i class="fi-rs-shuffle"></i> Sıfırla
+            </a>
+        <a asp-controller="Shop" asp-action="index" class="btn flex btn__md">
+                <i class="fi-rs-shopping-bag"></i> Alış-verişə davam edin
+            </a>
+        </div>
+
+        <div class="divider">
+            <i class="fi fi-rs-fingerprint"></i>
+        </div>
+
+        <div class="cart__group grid">
+            <div>
+                <div class="cart__shippinp">
+                    <h3 class="section__title">Məlumat</h3>
+                    <form action="" class="form grid">
+                        <input type="text"
+                               class="form__input"
+                               placeholder="Ölkə" />
+                        <div class="form__group grid">
+                            <input type="text" class="form__input" placeholder="Şəhər" />
+                            <input type="text"
+                                   class="form__input"
+                                   placeholder="PostCode" />
+                        </div>
+                        <div class="form__btn">
+                            <button class="btn flex btn--sm">
+                                <i class="fi-rs-shuffle"></i> Əlavə et
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="cart__coupon">
+                    <h3 class="section__title">Kupon əlavə edin</h3>
+                    <form action="" class="coupon__form form grid">
+                        <div class="form__group grid">
+                            <input type="text"
+                                   class="form__input"
+                                   placeholder="Kupan daxil edin" />
+                            <div class="form__btn">
+                                <button class="btn flex btn--sm">
+                                    <i class="fi-rs-label"></i> Göndər
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="cart__total">
+                <h3 class="section__title">Səbət</h3>
+                <table class="cart__total-table">
+                  
+                  
+                    <tr>
+                        <td><span class="cart__total-title">Cəmi</span></td>
+                        <td>
+                        <span class="cart__total-price amount total" id="summary">@Model.Sum(m => m.Quantity * m.Price).ToString("0.00₼")</span>
+                          
+                            </td>
+                    </tr>
+                </table>
+            <a asp-controller="Shop" asp-action="Checkout" class="btn flex btn--md">
+                    <i class="fi fi-rs-box-alt"></i> Ödənişi yekunlaşdır
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter section">
+        <div class="newsletter__container container grid">
+            <h3 class="newsletter__title flex">
+                <img src="./assets/img/icon-email.svg"
+                     alt=""
+                     class="newsletter__icon" />
+                Yeniliklərdən xəbərdar olmaq üçün abunə olun
+            </h3>
+            <p class="newsletter__description">
+                ...və ilk alış-veriş üçün 10% endirim əldə edin.
+            </p>
+            <form action="" class="newsletter__form">
+                <input type="text"
+                       placeholder="Email daxil edin"
+                       class="newsletter__input" />
+                <button type="submit" class="newsletter__btn">Abunə ol</button>
+            </form>
+        </div>
+    </section>
+
+
+
+@section addjs{
+    <script>
+        function changeQuantity(event, title) {
+            let obj = $(event.currentTarget).data();
+            obj.quantity = parseInt(event.currentTarget.value);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ChangeQuantity")",
+                data: obj,
+                success: function (response) {
+                    console.log(response);
+                    $('.total').html(`${response.total}₼`);
+                }
+            });
+        }
+    </script>
+        }

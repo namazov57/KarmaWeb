@@ -1,17 +1,16 @@
-﻿using Karma.Infrastructure.Entites;
-using Karma.Infrastructure.Repositories;
+﻿using Karma.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Karma.Business.Modules.CategoriesModule.Queries.CategoryGetByIdQuery
 {
     internal class CategoryGetByIdRequestHandler : IRequestHandler<CategoryGetByIdRequest, CategoryGetByIdRequestDto>
     {
         private readonly ICategoryRepository categoryRepository;
+
         public CategoryGetByIdRequestHandler(ICategoryRepository categoryRepository)
         {
-            categoryRepository = categoryRepository;
+            this.categoryRepository = categoryRepository;
         }
 
         public async Task<CategoryGetByIdRequestDto> Handle(CategoryGetByIdRequest request, CancellationToken cancellationToken)

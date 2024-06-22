@@ -38,6 +38,7 @@ namespace KarmaWebSite.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AddComment(BlogPostAddCommentRequest request)
         {
             var response = await mediator.Send(request);

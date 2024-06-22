@@ -1,5 +1,6 @@
 ﻿using Karma.Infrastructure.Repositories;
 using Karma.Infrastructure.Services.Abstracts;
+using Karma.Infrastructure.Services.Concretes;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Karma.Business.Modules.SubscribeModule.Commands.SubscribeApproveComman
         {
             request.Token = cryptoService.Decrypt(request.Token);
 
-            string pattern = @"(?<email>[^-]*)-(?<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}.\d{3})-karma";
+            string pattern = @"(?<email>[^-]*)-(?<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}.\d{3})-bigon";
 
             Match match = Regex.Match(request.Token, pattern);
 
@@ -41,14 +42,14 @@ namespace Karma.Business.Modules.SubscribeModule.Commands.SubscribeApproveComman
             if (!DateTime.TryParseExact(dateStr, "yyyy-MM-dd HH:mm:ss.fff", null, DateTimeStyles.None, out DateTime date))
                 throw new Exception("token zedelidir!");
 
-            var subscriber = subscriberRepository.Get(m => m.EmailAddress.Equals(email) && m.CreatedAt == date);
+            var subscriber = subscriberRepository.Get(m => m.Email.Equals(email) && m.CreatedAt == date);
 
             if (subscriber == null)
                 throw new Exception("token zedelidir!");
 
-            if (!subscriber.IsApproved)
+            if (!subscriber.Approved)
             {
-                subscriber.IsApproved = true;
+                subscriber.Approved = true;
                 subscriber.ApprovedAt = dateTimeServive.ExecutingTime;
             }
             subscriberRepository.Save();

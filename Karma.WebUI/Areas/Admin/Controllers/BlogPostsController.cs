@@ -62,6 +62,9 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             return View(response);
         }
 
+
+
+
        [Authorize("admin.blogs.edit")]
         public async Task<IActionResult> Edit(BlogPostGetByIdRequest request)
         {
@@ -69,7 +72,7 @@ namespace Karma.WebUI.Areas.Admin.Controllers
             ViewBag.CategoryId = new SelectList(categories, "Id", "Name");
 
             var tags = await mediator.Send(new TagsGetUsedRequest());
-            ViewBag.Tags = new SelectList(tags, "Text", "Text");
+            ViewBag.Tags = new SelectList(tags, "Name", "Name");
 
             var response = await mediator.Send(request);
 

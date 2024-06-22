@@ -1,0 +1,42 @@
+﻿<nav class="nav container">
+    <a asp-controller="home" asp-action="index" class="nav__logo">
+        <img class="nav__logo-img"
+             src="~/homeview/assets/img/de-facto-logo-light-v2.svg"
+             alt="website logo" />
+    </a>
+    <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+            <li  class="nav__item">
+                <a asp-active-route="home"  asp-controller="home" asp-action="index" class="nav__link">Əsas</a>
+            </li>
+            <li  class="nav__item">
+                <a asp-active-route="shop" asp-controller="shop" asp-action="index" class="nav__link">Məhsullar</a>
+            </li> 
+            <li  class="nav__item">
+                <a asp-active-route="blog"  asp-controller="blog" asp-action="index" class="nav__link">Haqqımızda</a>
+            </li>
+            <li  class="nav__item">
+                <a asp-active-route="account" asp-controller="account" asp-action="register" class="nav__link">Hesabım</a>
+            </li>
+
+            <li class="nav__item">
+                <a asp-active-route="account" asp-controller="account" asp-action="signin" class="nav__link">Daxil ol</a>
+            </li>
+        </ul>
+        <div class="header__search">
+            <input type="text"
+                   placeholder="Axtarış"
+                   class="form__input" />
+            <button class="search__btn">
+
+                <img src="~/homeview/assets/img/search.png" alt="search icon" />
+            </button>
+        </div>
+    </div>
+    <div class="header__user-actions">
+       
+        <div class="header__action-btn nav__toggle" id="nav-toggle">
+            <img src="~/homeview/assets//img/menu-burger.svg" alt="">
+        </div>
+    </div>
+</nav>
